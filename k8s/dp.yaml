@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dp
+  labels:
+    app: dp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dp
+  template:
+    metadata:
+      labels:
+        app: dp
+    spec:
+      containers:
+        - name: dp
+          image: sleepfood/backend:latest
+          ports:
+            - containerPort: 1447
