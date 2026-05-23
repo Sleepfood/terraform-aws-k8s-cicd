@@ -18,4 +18,6 @@ variable "iam_profile" {
 }
 
 variable "zone_name" {
+  description = "Route53 zone name"
+  default     = "sleepfood.pp.ua"
 }

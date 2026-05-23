@@ -6,8 +6,8 @@ region = "eu-central-1"
 name = "danit"
 
 
-vpc_id = "vpc-0bb5f828fddfbf9e7"
-subnets_ids = ["subnet-025cd4585ef90536e", "subnet-04942409f4d92aa7e", "subnet-0c9c5d9a519bd2253"]
+vpc_id      = "vpc-043c237504133227c"
+subnets_ids = ["subnet-080fb1a9cabfa0e19", "subnet-0901f561b589e44f6", "subnet-0cb69760b729ead19"]
 
 
 tags = {
@@ -16,4 +16,4 @@ tags = {
 }
 
 
-zone_name = "devops8.test-danit.com"
+zone_name = "sleepfood.pp.ua"
