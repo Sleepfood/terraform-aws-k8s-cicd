@@ -10,4 +10,4 @@ spec:
     - protocol: TCP
       port: 1447
       targetPort: 1447
-  type: LoadBalancer
+  type: NodePort
