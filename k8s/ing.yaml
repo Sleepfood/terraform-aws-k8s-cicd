@@ -10,12 +10,12 @@ metadata:
 spec:
   rules:
     - host: app.sleepfood.pp.ua
-    - http:
+      http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: ingress-nginx-controller
+                name: svc
                 port:
                   number: 80
