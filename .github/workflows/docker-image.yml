@@ -23,4 +23,6 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           push: true
-          tags: sleepfood/backend:latest
+          tags: |
+            sleepfood/backend:latest
+            sleepfood/backend:${{ github.sha }}
