@@ -154,6 +154,8 @@ In the GitHub repo, open **Settings → Environments → `dockerhub`** and add:
 
 > The workflow references them as `${{ vars.DOCKERHUB_USERNAME }}` and `${{ secrets.DOCKERHUB_TOKEN }}`. Keep the username as a *variable* (non-sensitive) and the token as a *secret*.
 
+![GitHub Actions secrets configured](screens/GitHub_secrets.png)
+
 ### Step 3 — Deploy the infrastructure
 
 ```bash
@@ -186,12 +188,19 @@ kubectl -n argocd get secret argocd-initial-admin-secret \
 
 User: `admin` · Password: *output above*.
 
+![ArgoCD initial password output](screens/ArgoCD_password.png)
+
 ### Step 6 — Open the UI / app
 
 - Argo CD: <https://argocd.sleepfood.pp.ua>
 - App:     <http://app.sleepfood.pp.ua>
 
 DNS records are created automatically by `external-dns`; allow a minute or two for propagation after the first apply.
+
+<p align="center">
+  <img src="screens/argoCD.png" alt="ArgoCD login screen" width="48%"/>
+  <img src="screens/app.sleepfood.pp.ua.png" alt="Flask app responding at app.sleepfood.pp.ua" width="48%"/>
+</p>
 
 ---
 
@@ -217,6 +226,18 @@ DNS records are created automatically by `external-dns`; allow a minute or two f
 - App code change → CI rebuilds image (`:latest` and `:<sha>`). The deployment uses `:latest`, so a new pod will pull the new image on the next rollout.
 - Manifest change in `k8s/` → ArgoCD detects drift and reconciles automatically (`syncPolicy.automated.prune: true`, `selfHeal: true`).
 - Cluster-level changes (ingress controller, ArgoCD config, IAM, etc.) → `terraform apply`.
+
+**The `app` Application synced and healthy in Argo CD:**
+
+![ArgoCD app synced](screens/argocd_app.png)
+
+**Configuration view of the same Application:**
+
+![ArgoCD application configuration](screens/ArgoCD_configuration.png)
+
+**Platform pods running in `kube-system` (ingress-nginx, external-dns, coredns, ebs-csi, …):**
+
+![kube-system namespace](screens/ns_kube_system.png)
 
 ---
 
@@ -258,19 +279,15 @@ terraform destroy
 
 ---
 
-## 📸 Screenshots
+## 🌐 DNS Setup
 
-| What | File |
-| ---- | ---- |
-| Argo CD login screen                  | `screens/argoCD.png`                 |
-| Argo CD initial admin password (CLI)  | `screens/ArgoCD_password.png`        |
-| Argo CD `app` Application synced      | `screens/argocd_app.png`             |
-| Argo CD configuration overview        | `screens/ArgoCD_configuration.png`   |
-| Live app at app.sleepfood.pp.ua       | `screens/app.sleepfood.pp.ua.png`    |
-| `kube-system` namespace               | `screens/ns_kube_system.png`         |
-| GitHub Actions secrets/variables      | `screens/GitHub_secrets.png`         |
-| Domain registration on nic.ua         | `screens/domain_nic_ua.png`          |
-| Route 53 hosted zone in AWS           | `screens/Route_53_AWS.png`           |
+The domain `sleepfood.pp.ua` was registered at **nic.ua** and delegated to AWS by replacing the registrar's NS records with Route 53's:
+
+![NS delegation on nic.ua](screens/domain_nic_ua.png)
+
+Once delegated, AWS owns the zone and `external-dns` writes records into it directly from ingress hostnames — no manual record management:
+
+![Route 53 hosted zone](screens/Route_53_AWS.png)
 
 ---
 
