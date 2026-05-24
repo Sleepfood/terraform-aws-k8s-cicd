@@ -29,3 +29,8 @@ values = [
   })
 ]
 }
+
+resource "kubectl_manifest" "argocd_app" {
+  yaml_body  = file("${path.module}/../../argocd/application.yaml")
+  depends_on = [helm_release.argocd]
+}
