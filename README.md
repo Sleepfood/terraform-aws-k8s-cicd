@@ -115,6 +115,11 @@ Developer ──git push──▶ GitHub ──▶ GitHub Actions ──build/pu
 | -------------- | --------------------------------------------------------- |
 | Application    | http://app.sleepfood.pp.ua                                |
 | Argo CD UI     | https://argocd.sleepfood.pp.ua                            |
+| Docker Hub     | https://hub.docker.com/r/sleepfood/backend                |
+
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-sleepfood%2Fbackend-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/sleepfood/backend)
+[![Docker Pulls](https://img.shields.io/docker/pulls/sleepfood/backend?logo=docker&logoColor=white)](https://hub.docker.com/r/sleepfood/backend)
+[![Docker Image Size](https://img.shields.io/docker/image-size/sleepfood/backend/latest?logo=docker&logoColor=white)](https://hub.docker.com/r/sleepfood/backend/tags)
 
 ---
 
@@ -224,6 +229,11 @@ DNS records are created automatically by `external-dns`; allow a minute or two f
 ```
 
 - App code change → CI rebuilds image (`:latest` and `:<sha>`). The deployment uses `:latest`, so a new pod will pull the new image on the next rollout.
+
+**Image tags published to [Docker Hub](https://hub.docker.com/r/sleepfood/backend) after each push to `main`:**
+
+![Docker Hub repository tags](screens/Docker_hub.png)
+
 - Manifest change in `k8s/` → ArgoCD detects drift and reconciles automatically (`syncPolicy.automated.prune: true`, `selfHeal: true`).
 - Cluster-level changes (ingress controller, ArgoCD config, IAM, etc.) → `terraform apply`.
 
